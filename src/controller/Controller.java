@@ -14,7 +14,7 @@ public class Controller {
 	/* Instancia de la Vista*/
 	private View view;
 	
-	static final String DATA_PATH = "./data/comparendos_dei_2018_small.geojson";
+	static final String DATA_PATH = "./data/comparendos_dei_2018_Bogotá_D.C_small.geojson";
 	
 	/**
 	 * Crear la vista y el modelo del proyecto
@@ -39,9 +39,6 @@ public class Controller {
 			int option = lector.nextInt();
 			switch(option){
 				case 1:
-					view.printMessage("--------- \nCopiando comparendos...");
-					features = modelo.copyFeatures();
-					view.printMessage("El nuevo arreglo tiene " + features.length + " comparendo(s)");
 					break;
 							
 				case 2: 
@@ -64,7 +61,7 @@ public class Controller {
 	    if( modelo.loadDataList(DATA_PATH) ){
 		    Feature firstFeature = modelo.getFirstFeature();
 		    Feature lastFeature = modelo.getLastFeature();
-		    int featuresNumber = modelo.getFeaturesSize();
+		    int featuresNumber = modelo.size();
 		    view.printGeneralFeaturesInfo(firstFeature, lastFeature, featuresNumber);
 	    }
 	}

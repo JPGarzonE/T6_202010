@@ -1,7 +1,5 @@
 package model.data_structures;
 
-import java.util.Iterator;
-
 public class SeparateChainningHash<Key extends Comparable<Key>, Value> implements ISeparateChainningHash<Key, Value> {
 
 	private int n;

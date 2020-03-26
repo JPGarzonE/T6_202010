@@ -1,7 +1,5 @@
 package model.data_structures;
 
-import java.util.Iterator;
-
 public interface ISeparateChainningHash<K extends Comparable<K>, V> {
 
 	public void put(K key ,V value);

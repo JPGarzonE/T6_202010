@@ -1,7 +1,5 @@
 package model.data_structures;
 
-import java.util.Iterator;
-
 public class LinearProbingHash<Key extends Comparable<Key>, Value> implements ILinearProbingHash<Key, Value>{
 	
 	private int n;
@@ -15,7 +13,7 @@ public class LinearProbingHash<Key extends Comparable<Key>, Value> implements IL
 	public LinearProbingHash( int capacity ){
 		m = capacity;
 		n = 0;
-		keys = (Key[]) new Object[m];
+		keys = (Key[]) new Comparable[m];
 		vals = (Value[]) new Object[m];
 	}
 	
@@ -32,7 +30,7 @@ public class LinearProbingHash<Key extends Comparable<Key>, Value> implements IL
 			resize(2*m);
 		
 		int i;
-		for(i = 0; keys[i] != null; i = (i+1) % m ){
+		for(i = hash(key); keys[i] != null; i = (i+1) % m ){
 			if( keys[i].equals(key) ){
 				vals[i] = value;
 				break;
@@ -71,7 +69,7 @@ public class LinearProbingHash<Key extends Comparable<Key>, Value> implements IL
 	public Value get(Key key) {
 		
 		if( key == null ) throw new IllegalArgumentException("key can't be null in get");
-		
+
 		for( int i = hash(key); keys[i] != null; i = (i+1) % m )
 			if( keys[i].equals(key) )
 				return vals[i];
@@ -132,7 +130,7 @@ public class LinearProbingHash<Key extends Comparable<Key>, Value> implements IL
 	}
 	
 	public double chargeFactor(){
-		return n/m;
+		return (double)n/(double)m;
 	}
 	
 	public boolean isEmpty() {
