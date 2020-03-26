@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 import model.logic.Feature;
@@ -39,9 +41,26 @@ public class Controller {
 			int option = lector.nextInt();
 			switch(option){
 				case 1:
+					view.printMessage("Fecha:");
+					String date = lector.next();
+					view.printMessage("Clase de vehiculo");
+					String vehicle = lector.next();
+					view.printMessage("Infracción");
+					String infraction = lector.next();
+					String key = (date + vehicle + infraction).trim();
+					view.printMessage("Buscando en Linear Probing...");
+					LinkedList<Feature> features = modelo.searchKeyOnLinearProbing(key);
+					Iterator<Feature> iterator = features.iterator();
+					
+					while( iterator.hasNext() )
+						view.printFeature(iterator.next());
+					
 					break;
-							
-				case 2: 
+				case 2:
+					break;
+				case 3:
+					break;
+				case 4: 
 					view.printMessage("--------- \n Hasta pronto !! \n---------"); 
 					lector.close();
 					fin = true;

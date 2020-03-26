@@ -3,17 +3,20 @@ package model.logic;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import com.sun.xml.internal.ws.util.StringUtils;
 
 import Exception.InconsistenceException;
 import model.data_structures.ILinearProbingHash;
 import model.data_structures.ISeparateChainningHash;
 import model.data_structures.LinearProbingHash;
+import model.data_structures.Queue;
 import model.data_structures.SeparateChainningHash;
 
 /**
@@ -82,6 +85,11 @@ public class Modelo {
 		return lastFeature;
 	}
 	
+	public LinkedList<Feature> searchKeyOnLinearProbing( String key ){
+		System.out.println("KeyToSearch: " + key);
+		return linearProbingHash.get(key);
+	}
+	
 	public boolean loadDataList(String path) {
 		if( loadGson(path) )
 			return true;
@@ -124,6 +132,8 @@ public class Modelo {
 					elemCoordinates.add(actualCoord);
 				}
 
+				elemVehicleClass = elemVehicleClass.startsWith("AUTOM") ? "AUTOMOVIL" : elemVehicleClass;
+				
 				Feature feature = new Feature(elemType, elemId, elemDate, elemDetectionMethod, elemVehicleClass,
 						elemServiceType, elemInfraction, elemInfractionReason, elemLocality, elemTown, elemGeomType,
 						elemCoordinates);
@@ -151,7 +161,7 @@ public class Modelo {
 	
 	
 	private void loadMapElement(Feature feature) throws InconsistenceException{
-
+		
 		String key = feature.getDate() + feature.getVehicleClass() + feature.getInfraction();
 
 		LinkedList<Feature> linearProbingVal = linearProbingHash.get(key);

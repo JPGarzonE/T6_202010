@@ -70,9 +70,11 @@ public class LinearProbingHash<Key extends Comparable<Key>, Value> implements IL
 		
 		if( key == null ) throw new IllegalArgumentException("key can't be null in get");
 
-		for( int i = hash(key); keys[i] != null; i = (i+1) % m )
+		for( int i = hash(key); keys[i] != null; i = (i+1) % m ){
+			System.out.println("key: " + keys[i]);
 			if( keys[i].equals(key) )
 				return vals[i];
+		}
 		
 		return null;
 	}

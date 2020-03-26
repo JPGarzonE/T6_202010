@@ -1,5 +1,7 @@
 package view;
 
+import java.util.LinkedList;
+
 import model.logic.Feature;
 import model.logic.Modelo;
 
@@ -15,11 +17,10 @@ public class View
 	    
 		public void printMenu()
 		{
-			System.out.println("\n1. Requerimiento 1 (copiar comparendos)");
-			System.out.println("2. Requerimiento 2 (Ordenar ascendentemente con Shell sort)");
-			System.out.println("3. Requerimiento 3 (Ordenar ascendentemente con Merge sort)");
-			System.out.println("4. Requerimiento 4 (Ordenar ascendentemente con Quick sort)");
-			System.out.println("5. Exit");
+			System.out.println("\n1. Requerimiento 1 (Busqueda linear probing)");
+			System.out.println("2. Requerimiento 2 (Separate Chainning)");
+			System.out.println("3. Requerimiento 3 (Pruebas de desempeño)");
+			System.out.println("4. Exit");
 			System.out.println("Dar el numero de opcion a resolver, luego oprimir tecla Return: (e.g., 1):");
 		}
 
