@@ -90,6 +90,11 @@ public class Modelo {
 		return linearProbingHash.get(key);
 	}
 	
+	public LinkedList<Feature> searchKeyOnSeparateChainning(String key){
+		System.out.println("KeyToSearch: " + key);
+		return separateChainningHash.get(key);
+	}
+	
 	public boolean loadDataList(String path) {
 		if( loadGson(path) )
 			return true;

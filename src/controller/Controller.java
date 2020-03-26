@@ -16,7 +16,7 @@ public class Controller {
 	/* Instancia de la Vista*/
 	private View view;
 	
-	static final String DATA_PATH = "./data/comparendos_dei_2018_Bogotá_D.C_small.geojson";
+	static final String DATA_PATH = "./data/Comparendos_DEI_2018_BogotÃ¡_D.C_small.geojson";
 	
 	/**
 	 * Crear la vista y el modelo del proyecto
@@ -45,7 +45,7 @@ public class Controller {
 					String date = lector.next();
 					view.printMessage("Clase de vehiculo");
 					String vehicle = lector.next();
-					view.printMessage("Infracción");
+					view.printMessage("Infracciï¿½n");
 					String infraction = lector.next();
 					String key = (date + vehicle + infraction).trim();
 					view.printMessage("Buscando en Linear Probing...");
@@ -57,10 +57,21 @@ public class Controller {
 					
 					break;
 				case 2:
+					view.printMessage("Fecha:");
+					String date1 = lector.next();
+					view.printMessage("Clase de vehiculo");
+					String vehicle1 = lector.next();
+					view.printMessage("Infracciï¿½n");
+					String infraction1 = lector.next();
+					String key1 = (date1 + vehicle1 + infraction1).trim();
+					view.printMessage("Buscando en Separate Chainning...");
+					LinkedList<Feature> features1 = modelo.searchKeyOnSeparateChainning(key1);
+					Iterator<Feature> iterator1 = features1.iterator();
+					
+					while( iterator1.hasNext() )
+						view.printFeature(iterator1.next());
 					break;
-				case 3:
-					break;
-				case 4: 
+				case 3: 
 					view.printMessage("--------- \n Hasta pronto !! \n---------"); 
 					lector.close();
 					fin = true;
