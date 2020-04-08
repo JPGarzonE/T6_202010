@@ -17,9 +17,10 @@ public class View
 	    
 		public void printMenu()
 		{
-			System.out.println("1. Requerimiento 1 (Busqueda linear probing)");
-			System.out.println("2. Requerimiento 2 (Busqueda Separate Chainning)");
-			System.out.println("3. Exit");
+			System.out.println("1. Requerimiento 1 (Carga de datos)");
+			System.out.println("2. Requerimiento 2 (Consultar comparendo por ID)");
+			System.out.println("3. Requerimiento 3 (Consultar los comparendos con un ID en un rango)");
+			System.out.println("4. Exit");
 			System.out.println("Dar el numero de opcion a resolver, luego oprimir tecla Return: (e.g., 1):");
 		}
 
@@ -46,16 +47,16 @@ public class View
 			
 		}
 		
-		public void printGeneralFeaturesInfo( Feature firstFeature, Feature lastFeature, int featuresNumber ){
+		public void printGeneralFeaturesInfo( Feature minValue, Feature maxValue, int featuresNumber ){
 			
 			System.out.println("\nDATOS GENERALES:");
 			System.out.println("\n-----------------------------------\n\n");
 			
-			System.out.println("\nPRIMER COMPARENDO:");
-			printFeature(firstFeature);
+			System.out.println("\nCOMPATENDO CON VALOR MINIMO:");
+			printFeature( minValue );
 			
-			System.out.println("\nULTIMO COMPARENDO:");
-			printFeature(lastFeature);
+			System.out.println("\nCOMPARENDO CON VALOR MAXIMO:");
+			printFeature( maxValue );
 			
 			System.out.println("\nNUMERO TOTAL DE COMPARENDOS: " + featuresNumber);
 			System.out.println("\n");

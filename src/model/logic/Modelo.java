@@ -4,20 +4,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-import com.sun.xml.internal.ws.util.StringUtils;
 
-import Exception.InconsistenceException;
-import model.data_structures.ILinearProbingHash;
-import model.data_structures.ISeparateChainningHash;
-import model.data_structures.LinearProbingHash;
-import model.data_structures.Queue;
-import model.data_structures.SeparateChainningHash;
+import model.data_structures.IRedBlackBST;
+import model.data_structures.RedBlackBST;
 
 /**
  * Definicion del modelo del mundo
@@ -26,47 +20,26 @@ import model.data_structures.SeparateChainningHash;
 public class Modelo {
 	
 	/**
-	 * Linear probing hash
+	 * Red black tree
 	 */
-	private ILinearProbingHash<String, LinkedList<Feature>> linearProbingHash;
-	
-	/**
-	 * Separate chainning hash
-	 */
-	private ISeparateChainningHash<String, LinkedList<Feature>> separateChainningHash;
+	private IRedBlackBST<Integer, Feature> redBlackBST;
 	
 	/**
 	 * First feature
 	 */
-	private Feature firstFeature;
+	private Feature minValue;
 	
 	/**
 	 * Last feature
 	 */
-	private Feature lastFeature;
-	
-	/**
-	 * Size
-	 */
-	private int size;
+	private Feature maxValue;
 	
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
 	 */
 	public Modelo()
 	{
-		linearProbingHash = new LinearProbingHash<>(10);
-		separateChainningHash = new SeparateChainningHash<>(10);
-	}
-	
-	/**
-	 * Constructor del modelo del mundo con capacidad dada
-	 * @param tamano
-	 */
-	public Modelo(int capacity )
-	{
-		linearProbingHash = new LinearProbingHash<>( capacity );
-		separateChainningHash = new SeparateChainningHash<>( capacity );
+		redBlackBST = new RedBlackBST<>();
 	}
 	
 	/**
@@ -74,25 +47,23 @@ public class Modelo {
 	 * @return numero de elementos presentes en el modelo
 	 */
 	public int size(){
-		return size;
+		return redBlackBST.size();
 	}
 	
-	public Feature getFirstFeature(){
-		return firstFeature;
+	public Feature getMinValue(){
+		return minValue;
 	}
 	
-	public Feature getLastFeature(){
-		return lastFeature;
+	public Feature getMaxValue(){
+		return maxValue;
 	}
 	
-	public LinkedList<Feature> searchKeyOnLinearProbing( String key ){
-		System.out.println("KeyToSearch: " + key);
-		return linearProbingHash.get(key);
+	public Feature searchByID( int objectID ){
+		return redBlackBST.get( objectID );
 	}
 	
-	public LinkedList<Feature> searchKeyOnSeparateChainning(String key){
-		System.out.println("KeyToSearch: " + key);
-		return separateChainningHash.get(key);
+	public Iterator<Feature> searchByIDRange( int initID, int endID ){
+		return redBlackBST.valuesInRange(initID, endID);
 	}
 	
 	public boolean loadDataList(String path) {
@@ -143,20 +114,22 @@ public class Modelo {
 						elemServiceType, elemInfraction, elemInfractionReason, elemLocality, elemTown, elemGeomType,
 						elemCoordinates);
 
-				loadMapElement(feature);
+				loadElement(feature);
 
-				if( firstFeature == null )
-					firstFeature = feature;
+				if( minValue == null )
+					minValue = feature;
+				else if( minValue.getObjectId() > feature.getObjectId() )
+					minValue = feature;
 				
-				lastFeature = feature;
+				if( maxValue == null )
+					maxValue = feature;
+				else if( maxValue.getObjectId() < feature.getObjectId() )
+					maxValue = feature;
+				
 			}
 
 		} catch (FileNotFoundException e) {
 			System.out.println("ERROR! File not found\n\n");
-			return false;
-		}
-		catch( InconsistenceException e ){
-			System.out.println("ERROR! " + e.getMessage() + " \n\n");
 			return false;
 		}
 		
@@ -165,28 +138,9 @@ public class Modelo {
 	}
 	
 	
-	private void loadMapElement(Feature feature) throws InconsistenceException{
+	private void loadElement(Feature feature){
 		
-		String key = feature.getDate() + feature.getVehicleClass() + feature.getInfraction();
-
-		LinkedList<Feature> linearProbingVal = linearProbingHash.get(key);
-		LinkedList<Feature> separateChainningVal = separateChainningHash.get(key);
-		
-		if( linearProbingVal != null && separateChainningVal != null ){
-			linearProbingVal.add(feature);
-			separateChainningVal.add(feature);
-		}
-		else if( linearProbingVal == null && separateChainningVal == null ){
-			LinkedList<Feature> val = new LinkedList<>();
-			val.add(feature);
-			linearProbingHash.put(key, val);
-			separateChainningHash.put(key, val);
-		}
-		else{
-			throw new InconsistenceException("INCONSISTENCE: Both hash maps not have the same data");
-		}
-		
-		size++;
+		redBlackBST.put( feature.getObjectId(), feature );
 		
 	}
 

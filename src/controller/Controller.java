@@ -16,7 +16,7 @@ public class Controller {
 	/* Instancia de la Vista*/
 	private View view;
 	
-	static final String DATA_PATH = "./data/Comparendos_DEI_2018_BogotÃ¡_D.C_small.geojson";
+	static final String DATA_PATH = "./data/Comparendos_DEI_2018_Bogotá_D.C.geojson";
 	
 	/**
 	 * Crear la vista y el modelo del proyecto
@@ -29,9 +29,7 @@ public class Controller {
 	}
 		
 	public void run() 
-	{
-		loadFeatures();
-		
+	{		
 		Scanner lector = new Scanner(System.in);
 		boolean fin = false;
 
@@ -41,37 +39,33 @@ public class Controller {
 			int option = lector.nextInt();
 			switch(option){
 				case 1:
-					view.printMessage("Fecha:");
-					String date = lector.next();
-					view.printMessage("Clase de vehiculo");
-					String vehicle = lector.next();
-					view.printMessage("Infracciï¿½n");
-					String infraction = lector.next();
-					String key = (date + vehicle + infraction).trim();
-					view.printMessage("Buscando en Linear Probing...");
-					LinkedList<Feature> features = modelo.searchKeyOnLinearProbing(key);
-					Iterator<Feature> iterator = features.iterator();
+					loadFeatures();
+					break;
+				
+				case 2:
+					view.printMessage("ObjectID a buscar: ");
+					int objectID = lector.nextInt();
+					view.printMessage("--------- \nBuscando comparendo...");
+					Feature feature = modelo.searchByID( objectID );
+					view.printMessage("------------------\n RESULTADO:\n");
+					view.printFeature(feature);
+					break;
+					
+				case 3:
+					view.printMessage("Desde (ID): ");
+					int initID = lector.nextInt();
+					view.printMessage("Hasta (ID): ");
+					int endID = lector.nextInt();
+					view.printMessage("--------- \nBuscando comparendo...");
+					
+					Iterator<Feature> iterator = modelo.searchByIDRange(initID, endID);
 					
 					while( iterator.hasNext() )
-						view.printFeature(iterator.next());
+						view.printFeature( iterator.next() );
+
+					break;	
 					
-					break;
-				case 2:
-					view.printMessage("Fecha:");
-					String date1 = lector.next();
-					view.printMessage("Clase de vehiculo");
-					String vehicle1 = lector.next();
-					view.printMessage("Infracciï¿½n");
-					String infraction1 = lector.next();
-					String key1 = (date1 + vehicle1 + infraction1).trim();
-					view.printMessage("Buscando en Separate Chainning...");
-					LinkedList<Feature> features1 = modelo.searchKeyOnSeparateChainning(key1);
-					Iterator<Feature> iterator1 = features1.iterator();
-					
-					while( iterator1.hasNext() )
-						view.printFeature(iterator1.next());
-					break;
-				case 3: 
+				case 4: 
 					view.printMessage("--------- \n Hasta pronto !! \n---------"); 
 					lector.close();
 					fin = true;
@@ -89,8 +83,8 @@ public class Controller {
 		view.printMessage("--------- \nCargando datos de comparendos...");
 	    modelo = new Modelo();
 	    if( modelo.loadDataList(DATA_PATH) ){
-		    Feature firstFeature = modelo.getFirstFeature();
-		    Feature lastFeature = modelo.getLastFeature();
+		    Feature firstFeature = modelo.getMinValue();	
+		    Feature lastFeature = modelo.getMaxValue();
 		    int featuresNumber = modelo.size();
 		    view.printGeneralFeaturesInfo(firstFeature, lastFeature, featuresNumber);
 	    }
