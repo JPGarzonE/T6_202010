@@ -16,7 +16,7 @@ public class Controller {
 	/* Instancia de la Vista*/
 	private View view;
 	
-	static final String DATA_PATH = "./data/Comparendos_DEI_2018_Bogot·_D.C.geojson";
+	static final String DATA_PATH = "./data/Comparendos_DEI_2018_Bogot√°_D.C_50000_.geojson";
 	
 	/**
 	 * Crear la vista y el modelo del proyecto
@@ -86,7 +86,8 @@ public class Controller {
 		    Feature firstFeature = modelo.getMinValue();	
 		    Feature lastFeature = modelo.getMaxValue();
 		    int featuresNumber = modelo.size();
-		    view.printGeneralFeaturesInfo(firstFeature, lastFeature, featuresNumber);
+		    int featuresHeight = modelo.height();
+		    view.printGeneralFeaturesInfo(firstFeature, lastFeature, featuresNumber, featuresHeight);
 	    }
 	}
 }

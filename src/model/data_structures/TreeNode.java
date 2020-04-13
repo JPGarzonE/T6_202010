@@ -1,5 +1,7 @@
 package model.data_structures;
 
+import java.awt.Color;
+
 public class TreeNode<Key extends Comparable<Key>, Value> {
 
 	private static final boolean RED   = true;
@@ -20,6 +22,8 @@ public class TreeNode<Key extends Comparable<Key>, Value> {
      */
     private boolean color;
     
+    
+    private Color colors;
     /**
      * Counter of the elements number in the subtree
      */
@@ -38,6 +42,10 @@ public class TreeNode<Key extends Comparable<Key>, Value> {
 
 	public Value getVal() {
 		return val;
+	}
+	
+	public Color getColor() {
+		return colors;
 	}
 
 	public TreeNode<Key, Value> getLeft() {

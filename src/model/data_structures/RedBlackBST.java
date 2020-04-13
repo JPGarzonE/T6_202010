@@ -98,6 +98,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements IRedBlac
         root = put(root, key, value);
         
         root.setColor( BLACK );
+        
 		
 	}
 	

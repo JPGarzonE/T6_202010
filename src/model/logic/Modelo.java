@@ -50,6 +50,9 @@ public class Modelo {
 		return redBlackBST.size();
 	}
 	
+	public int height() {
+		return redBlackBST.height();
+	}
 	public Feature getMinValue(){
 		return minValue;
 	}

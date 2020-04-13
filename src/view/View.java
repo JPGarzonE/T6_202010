@@ -47,7 +47,7 @@ public class View
 			
 		}
 		
-		public void printGeneralFeaturesInfo( Feature minValue, Feature maxValue, int featuresNumber ){
+		public void printGeneralFeaturesInfo( Feature minValue, Feature maxValue, int featuresNumber, int featuresHeight ){
 			
 			System.out.println("\nDATOS GENERALES:");
 			System.out.println("\n-----------------------------------\n\n");
@@ -59,6 +59,9 @@ public class View
 			printFeature( maxValue );
 			
 			System.out.println("\nNUMERO TOTAL DE COMPARENDOS: " + featuresNumber);
+			System.out.println("\n");
+			
+			System.out.println("\nALTURA ARBOL:"+ featuresHeight);
 			System.out.println("\n");
 			
 		}
